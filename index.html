@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+			}
+			html{
+				overflow:hidden;
+			}
+			body{
+				background:url(images/3.jpg) no-repeat;
+				background-size:cover;
+			}
+			.fork{
+				position:fixed;
+				top:0;
+				right:0;
+				z-index:1;
+			}
+		</style>
+	</head>
+	<body>
+	<a class="fork" href="https://github.com/xlweb/snow" target="_blank">
+        <img src="images/forkme.png" width="149" height="149" />
+    </a>
+	<canvas id = "canvas"></canvas>
+	<audio src = "mp3/1.mp3" autoplay></audio>
+	<script type = "text/javascript">
+		var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		var w = window.innerWidth ||document.documentElement.clientWidth;
+		var h = window.innerHeight ||document.documentElement.clientHeight;
+		canvas.width = w;
+		canvas.height = h;
+		var snows = 300;
+		var arr = [];
+		for(var i = 0;i<snows;i++){
+			arr.push({
+				x:Math.random()*w,
+				y:Math.random()*h,
+				r:Math.random()
+			});
+		}
+		// 绘画雪花
+		function draw(){
+			ctx.clearRect(0,0,w,h);
+			ctx.beginPath();
+			ctx.fillStyle = "#fff";
+			ctx.strokeStyle = "#fff";
+			ctx.shadowOffsetX = "0";
+			ctx.shadowOffsetY = "0";
+			ctx.shadowBlur = "10";
+			ctx.shadowColor = "#fff";
+//				ctx.lineWidth ="2";
+			for(var i = 0;i<snows;i++){
+				ctx.moveTo(arr[i].x,arr[i].y);
+//					ctx.lineTo(arr[i].x,arr[i].y+100);
+				ctx.arc(arr[i].x,arr[i].y,arr[i].r,0,Math.PI*2);
+			}
+			ctx.fill();
+			ctx.stroke();
+			drop();
+		}
+		// 雪花下落效果
+		function drop(){
+			for(var i = 0;i<snows;i++){
+				arr[i].y +=Math.random()*20;
+				if(arr[i].y>h){
+					arr[i].y = 0;
+				}
+			}
+		}
+		// 定时下落动画
+		setInterval(draw,30);
+	</script>
+	</body>
+</html>
